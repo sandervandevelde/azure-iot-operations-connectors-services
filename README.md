@@ -4,6 +4,8 @@
 
 This repository offers test services for Azure IoT Operations connectors.
 
+Read about Azure IoT connectors in [my blog](https://sandervandevelde.wordpress.com/)
+
 ## Basic Http Rest Service
 
 This service provides a RESTful API with a '/api/counter' endpoint.
