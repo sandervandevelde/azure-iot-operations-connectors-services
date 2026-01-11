@@ -6,15 +6,17 @@ This repository offers test services for Azure IoT Operations connectors.
 
 ## Basic Http Rest Service
 
-This service offers a REST service, having a '/api/counter' endpoint.
+This service provides a RESTful API with a '/api/counter' endpoint.
 
 Make a call like:
 
 ```
-https://localhost:7063/api/counter
+http://[local IP address]:5000/api/counter
 ```
 
-This endpoint is protected with HTTP Basic Authentication (the root is over for everyone).
+This endpoint is protected with HTTP Basic Authentication (the root endpoint is open to everyone).
+
+*Note*: The port is hardcoded. The service does not offer its endpoints secured by TLS. You can use this example for tests only.
 
 Example using curl:
 
@@ -22,7 +24,7 @@ Example using curl:
 curl -u anyuser:p@ssw0rd! https://localhost:7063/api/counter
 ```
 
-*Note*: The password is 'p@ssw0rd!' as seen in the app settings. This password is not encrypted by default. HTTP Basic Authentication is only secure when used together with TLS!
+*Note*: The password is 'p@ssw0rd!' as seen in the app settings. This password is not encrypted by default. HTTP Basic Authentication is only secure when used in combination with TLS!
 
 The response looks like:
 
@@ -31,4 +33,3 @@ The response looks like:
 ```
 
 The counter value will be increased on every call. The state is kept in memory.
-
