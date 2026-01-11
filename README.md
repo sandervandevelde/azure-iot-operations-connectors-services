@@ -14,6 +14,16 @@ Make a call like:
 https://localhost:7063/api/counter
 ```
 
+This endpoint is protected with HTTP Basic Authentication (the root is over for everyone).
+
+Example using curl:
+
+```
+curl -u anyuser:p@ssw0rd! https://localhost:7063/api/counter
+```
+
+*Note*: The password is 'p@ssw0rd!' as seen in the app settings. This password is not encrypted by default. HTTP Basic Authentication is only secure when used together with TLS!
+
 The response looks like:
 
 ```
