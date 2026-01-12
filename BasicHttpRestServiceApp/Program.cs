@@ -1,4 +1,6 @@
 using System.Text;
+using System.Net;
+using System.Net.Sockets;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -43,7 +45,22 @@ app.MapGet("/api/counter", () =>
 
 Console.WriteLine("Starting BasicHttpRestServiceApp having Rest endpoint '/api/counter'");
 
-app.Run();
+var localIP = GetLocalIPAddress();
+
+app.Run("http://" + localIP + ":5000");
+
+static string GetLocalIPAddress()
+{
+    var host = Dns.GetHostEntry(Dns.GetHostName());
+    foreach (var ip in host.AddressList)
+    {
+        if (ip.AddressFamily == AddressFamily.InterNetwork)
+        {
+            return ip.ToString();
+        }
+    }
+    throw new Exception("No network adapters with an IPv4 address in the system!");
+}
 
 static bool TryValidateBasicAuth(string? authorizationHeader, string requiredPassword)
 {
