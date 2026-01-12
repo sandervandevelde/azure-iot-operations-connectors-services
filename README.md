@@ -25,7 +25,7 @@ This endpoint is protected with HTTP Basic Authentication (the root endpoint is 
 Example using curl:
 
 ```
-curl -u anyuser:p@ssw0rd! https://[local IP address]:5000/api/counter
+curl -u anyuser:p@ssw0rd! http://[local IP address]:5000/api/counter
 ```
 
 *Note*: The password is 'p@ssw0rd!' as seen in the app settings. This password is not encrypted by default. HTTP Basic Authentication is only secure when used in combination with TLS!
@@ -48,15 +48,17 @@ Make a call like:
 http://[local IP address]:5001/sse/counter
 ```
 
-This endpoint is unprotected 
+This endpoint is open for everyone.
+
+*Note*: The port is hardcoded. The service does not offer its endpoints secured by TLS. You can use this example for tests only.
 
 Example using curl:
 
 ```
-curl https://[local IP address]:5001/sse/counter
+curl http://[local IP address]:5001/sse/counter
 ```
 
-The SSE response will looks like:
+The SSE response will look like:
 
 ```
 {"deviceId":"SseEndpointDevice","timestamp":"2026-01-11T15:06:58.442483+00:00","counter":1}
