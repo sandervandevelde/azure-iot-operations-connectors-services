@@ -47,7 +47,11 @@ Console.WriteLine("Starting BasicHttpRestServiceApp having Rest endpoint '/api/c
 
 var localIP = GetLocalIPAddress();
 
-app.Run("http://" + localIP + ":5000");
+app.Urls.Add($"http://{localIP}:5000");
+app.Urls.Add($"https://{localIP}:5001");
+app.Run();
+
+//app.Run("http://" + localIP + ":5000");
 
 static string GetLocalIPAddress()
 {

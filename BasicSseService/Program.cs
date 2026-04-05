@@ -5,14 +5,24 @@ using System.Text.Json;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-Console.WriteLine("Starting BasicSseServiceApp having SSE endpoint '/sse/counter'");
+Console.WriteLine("SSE Test Server: Starting SSE endpoint '/sse/counter'");
 
-var localIP = GetLocalIPAddress();
-
-app.MapGet("/sse/counter", async (HttpContext context) =>
+app.MapGet("/sse/counter", async (HttpContext context, CancellationToken ct) =>
 {
-    Console.WriteLine($"Client {context.Connection.Id} connected to SSE stream");
+    Console.WriteLine($"Client {context.Connection.Id} connected to SSE stream from {context.Connection.RemoteIpAddress}");
 
+    var lastId = -1;
+    if (context.Request.Headers.TryGetValue("Last-Event-ID", out var lastEventId))
+    {
+        int.TryParse(lastEventId, out lastId);
+
+        if (lastId != -1)
+        {
+            Console.WriteLine($"Client {context.Connection.Id} sent Last-Event-ID: {lastId}");
+        }
+    }
+
+    context.Response.ContentType = "text/event-stream";
     context.Response.Headers.ContentType = "text/event-stream";
     context.Response.Headers.CacheControl = "no-cache";
     context.Response.Headers.Connection = "keep-alive";
@@ -26,6 +36,9 @@ app.MapGet("/sse/counter", async (HttpContext context) =>
         {
             counter++;
 
+            await context.Response.WriteAsync($"id: {counter}\n", ct);
+            await context.Response.WriteAsync($"event: counter\n", ct);
+
             var payload = new
             {
                 deviceId = "SseEndpointDevice",
@@ -34,10 +47,10 @@ app.MapGet("/sse/counter", async (HttpContext context) =>
             };
 
             var jsonMessage = JsonSerializer.Serialize(payload);
-            await context.Response.WriteAsync(jsonMessage, context.RequestAborted);
-            await context.Response.Body.FlushAsync(context.RequestAborted);
-            
-            await Task.Delay(1000, context.RequestAborted);
+            await context.Response.WriteAsync($"data: {jsonMessage}\n\n", ct);
+            await context.Response.Body.FlushAsync(ct);
+
+            await Task.Delay(1000, ct);
         }
     }
     catch (OperationCanceledException)
@@ -46,7 +59,11 @@ app.MapGet("/sse/counter", async (HttpContext context) =>
     }
 });
 
-app.Run("http://" + localIP + ":5001");
+var localIP = GetLocalIPAddress();
+
+app.Urls.Add($"http://{localIP}:5010");
+app.Urls.Add($"https://{localIP}:5011");
+app.Run();
 
 static string GetLocalIPAddress()
 {
