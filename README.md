@@ -44,7 +44,7 @@ If you see calls, you know a client is connected. You can test it out using a br
 
 ### Basic Server-sent events (SSE) service endpoint
 
-This service provides a Server-Side Events API with a '/sse/counter' endpoint.
+This service provides a Server-Sent Events API with a '/sse/counter' endpoint.
 
 Make a call like:
 
