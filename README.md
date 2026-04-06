@@ -92,5 +92,26 @@ One message is a combination of three lines:
 
 A client will share the last received id as header named 'Last-Event-ID' when connecting.
 
+On the server, this looks like:
+
+```
+SSE Test Server: Starting SSE endpoint '/sse/counter'
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://192.168.3.181:5010
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: https://192.168.3.181:5011
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\git\azure-iot-operations-connectors-services\BasicSseService\bin\Debug\net10.0
+Client 0HNKJTJH6O2S1 connected to SSE stream from 192.168.3.181
+Client 0HNKJTJH6O2S2 connected to SSE stream from 192.168.3.196
+Client 0HNKJTJH6O2S2 sent Last-Event-ID: 52
+```
+
 *Note*: Azure IoT Operations expects all three kinds of message lines.
+
+
 
