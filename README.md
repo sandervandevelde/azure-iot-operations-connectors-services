@@ -8,6 +8,8 @@ Read about Azure IoT connectors in [my blog](https://sandervandevelde.wordpress.
 
 ## Services in this repo
 
+Use these services for demonstration purposes. These are not production-ready.
+
 ### Basic HTTP/Rest service endpoint
 
 This service provides a RESTful API with a '/api/counter' endpoint.
