@@ -84,6 +84,8 @@ The counter value will be increased on every call for every individual connectio
 
 SSE offers a continuous stream of messages, each separated with a 'newline'.
 
+So, the client connection is kept open!
+
 One message is a combination of three lines:
 
 1. A line starting with 'id: '
